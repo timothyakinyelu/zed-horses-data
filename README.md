@@ -33,8 +33,8 @@ To read the file in future, type in your browser
 ### To make it less complicated
 I have deployed to a website which you can access by typing:
 
-        https://zed-data.herpkuapp.com
+        https://zed-data.herokuapp.com
 
 and to read the file later, type
 
-        https://zed-data.herpkuapp.com/read-data
+        https://zed-data.herokuapp.com/read-data
