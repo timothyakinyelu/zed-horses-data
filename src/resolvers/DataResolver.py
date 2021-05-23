@@ -103,10 +103,21 @@ def getFromZed():
 
 def readZedDataFromFile():
     """ read json file to browser """
+
+    date_from = request.args.get('start')
+    date_to = request.args.get('end')
+
+    dataSet = Path('src/datasets/')
+    datafile = dataSet / 'dataFor{}To{}.json'.format(date_from, date_to)
     
-    with open(datafile, "r") as read_file:
-        data = json.load(read_file)
-    
-    return data
+    try:
+        with open(datafile, "r") as read_file:
+            data = json.load(read_file)
+
+        res = {'message': data['get_race_results']}
+        return jsonify(res)
+    except Exception:
+        res = {'message': 'No such file exists'}
+        return jsonify(res)
 
     
