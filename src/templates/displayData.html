@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <section>
-        <h3>Fetch Horse data from Zed</h3>
+        <h3>Fetch saved file by date</h3>
         <form action="">
             <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                 <input type="hidden" id="start" value="2"/>
@@ -9,11 +9,10 @@
                 <i class="fa fa-calendar"></i>&nbsp;
                 <span></span> <i class="fa fa-caret-down"></i>
             </div>
-            <h5>Number of page results to return: 
-                <input type="number" id="paginate" value="2"/>
-            </h5>
-            <button class="btn-submit">Apply</button>
-            <p></p>
+            <button class="btn-fetch">Apply</button>
         </form>
+        <br/>
+        <hr>
+        <p id="json"></p>
     </section>
 {% endblock %}
