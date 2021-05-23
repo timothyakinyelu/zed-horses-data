@@ -18,6 +18,12 @@ class GetDataView(MethodView):
         return DataResolver.getFromZed()
 
 
+class FetchFileView(MethodView):
+    """ run graphql playground locally """
+    
+    def get(self):
+        return render_template('displayData.html') 
+
 class ReadDataView(MethodView):
     """ read data from file """
     
@@ -29,6 +35,7 @@ class ReadDataView(MethodView):
 # name routes
 index_view = IndexView.as_view('index_view')
 get_data_view = GetDataView.as_view('get_data_view')
+fetch_file_view = FetchFileView.as_view('fetch_file_view')
 read_data_view = ReadDataView.as_view('read_data_view')
 
 # url rule
@@ -39,6 +46,10 @@ bet.add_url_rule(
 bet.add_url_rule(
     '/get-data',
     view_func=get_data_view
+)
+bet.add_url_rule(
+    '/fetch-file',
+    view_func=fetch_file_view
 )
 bet.add_url_rule(
     '/read-data',
