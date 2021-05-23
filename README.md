@@ -23,11 +23,13 @@ after this is done and no errors show up, go to your browser and type
 
         localhost:5000/
 
-this will automatically fetch data from zed and display in readable format for you, and it will also save the latest data to the data.json file.
+you can fetch data by date and also indicate how many pages of the results you want returned
 
 To read the file in future, type in your browser
 
-        localhost:5000/read-data
+        localhost:5000/fetch-file
+
+this url enables you fetch saved file by date
 
 
 ### To make it less complicated
@@ -37,4 +39,4 @@ I have deployed to a website which you can access by typing:
 
 and to read the file later, type
 
-        https://zed-data.herokuapp.com/read-data
+        https://zed-data.herokuapp.com/fetch-file
