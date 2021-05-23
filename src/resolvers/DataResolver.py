@@ -1,30 +1,35 @@
-from flask import json
+from flask import json, request, jsonify
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 from pathlib import Path
-import datetime
+from datetime import date, datetime
 
-
-dataSet = Path('src/datasets/')
-datafile = dataSet / 'data.json'
 
 def getFromZed():
     """ fetch from zed API """
+
+    date_from = request.args.get('start')
+    date_to = request.args.get('end')
+    numOfPages = int(request.args.get('pages'))
+
+    dataSet = Path('src/datasets/')
+    datafile = dataSet / 'dataFor{}To{}.json'.format(date_from, date_to)
+    
+    start_date = date.fromisoformat(date_from)     
+    end_date = date.fromisoformat(date_to)
+
+    start = start_date.strftime('%Y-%m-%dT%H:%M:%S.%f%SZ')
+    end = end_date.strftime('%Y-%m-%dT%H:%M:%S.%f%SZ')
+
 
     # Select your transport with a defined url endpoint
     transport = RequestsHTTPTransport(url="https://zed-ql.zed.run/graphql")
 
     # Create a GraphQL client using the defined transport
     client = Client(transport=transport, fetch_schema_from_transport=True)
-    
-    date_from = datetime.datetime(year=2018, month=12, day=1, hour=00, minute=00, second=00)
-    date_to = datetime.datetime(year=2021, month=12, day=31, hour=23, minute=59, second=00)
-    
-    start = date_from.strftime('%Y-%m-%dT%H:%M:%S.%f%SZ')
-    end = date_to.strftime('%Y-%m-%dT%H:%M:%S.%f%SZ')
 
     variables = {
-        "first": 2,
+        "first": numOfPages,
         "input": {
             "dates": {
                "from": "{}".format(start),
@@ -92,7 +97,8 @@ def getFromZed():
     with open(datafile, 'w') as outfile:
         json.dump(result, outfile)
     
-    return result
+    res = {'message': "A new file {} has been created".format(datafile)}
+    return jsonify(res)
 
 
 def readZedDataFromFile():
